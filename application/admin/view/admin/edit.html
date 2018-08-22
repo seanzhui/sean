@@ -1,0 +1,138 @@
+{include file="public/header"}
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite><span class="layui-box">&gt;</span></a>
+              <a href="{:url('admin/index')}"><cite>管理员管理</cite><span class="layui-box">&gt;</span></a>
+              <a><cite>管理员列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <form class="layui-form" id="form1" method="post" action="{:url('admin/update')}">
+                <input type="hidden" name="id" value="{$admins.id}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属分组</label>
+                    <div class="layui-input-block" >
+                        <select name="groupid">
+                            <option value="">请选择</option>
+                            {volist name="groupRes" id="group"}
+                            <option {if condition="$admins['groupid'] eq $group['id']"} selected="selected" {/if} value="{$group.id}">{$group.title}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">缩略图</label>
+                    <div class="layui-input-block">
+                        <a id="btn-thumb">
+                            <img src="__STATIC__/images/{$admins.img}" id="thumb-preview" width="100" height="100" style="cursor:pointer"/>
+                        </a>
+                        <div id="tips-thumb"></div>
+                        <input type="hidden" name="img" id="input-thumb" value="{$admins.img}">
+                        <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="demo1" id="cancel">删除图片</button>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">昵称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" value="{$admins.name}" autocomplete="off" placeholder="请输入您的昵称" class="layui-input">
+                        <div id="errusername" align="center"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="uname" value="{$admins.uname}" autocomplete="off" placeholder="请输入您的用户名" class="layui-input">
+                        <div id="errusername" align="center"></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" id="L_pass" name="password" lay-verify="pass" autocomplete="off" class="layui-input" value="" placeholder="请输入您的新密码">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">确认密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" id="L_repass" name="password" lay-verify="repass" value="" autocomplete="off" class="layui-input" placeholder="请确认您的新密码">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="">
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-admin.js"></script>
+        <script src="__STATIC__/js/layui/jquery.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/layui/layui.all.js" charset="utf-8"></script>
+        <script>
+            layui.use('upload', function(){
+                var $ = layui.jquery;
+                var upload = layui.upload;
+
+                var uploadInst = upload.render({
+                    elem:'#btn-thumb',
+                    url: "{:url('admin/admin/upload')}",//上传接口
+                    size:2000,
+                    exts: 'jpg|png|jpeg',
+                    before: function(obj){
+                        obj.preview(function(index, file, result){
+                            $('#thumb-preview').attr('src',result);
+                        });
+                    },
+                    done: function(res){
+                        console.log(res);
+                        if(res.code == 0){
+                            return layer.msg(res.message);
+                        }
+                        $('#input-thumb').val(res.filepath);
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            $("#cancel").click(function(){
+                 var imgurl=$("input[name='img']").val();
+                 if(!imgurl){
+                     layer.msg('请先上传图片！', {icon: 2});
+                     return false;
+                 }
+                 layer.confirm('确定要撤销图片吗？', {icon: 3, title:'提示'}, function(index){
+                 $("#cateimgdiv").hide();
+                 $("input[name='img']").val('');
+                 $.ajax({
+                     type:"post",
+                     dataType:"json",
+                     data:{imgurl:imgurl},
+                     url:"{:url('admin/delimg')}",
+                     success:function(data){
+                         if(data==1){
+                             layer.msg('撤销成功！', {icon: 1});
+                         }else{
+                             layer.msg('撤销失败！', {icon: 2});
+                         }
+                     }
+                 });
+                   layer.close(index);
+                 });
+
+             });
+        </script>
+
+    </body>
+
+</html>

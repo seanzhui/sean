@@ -1,0 +1,118 @@
+{include file="public/header"}
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>栏目管理</cite></a>
+              <a><cite>栏目管理</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <xblock>
+                <div class="layui-btn"><i class="layui-icon"></i><a href="{:url('cate/add')}" id="add">添加</a></div>
+                <span class="x-right" style="line-height:40px">共有数据：{$confCount}条</span>
+            </xblock>
+            <table class="layui-table">
+                <thead>
+                    <tr pid="0">
+                        <th>ID</th>
+                        <th>排序</th>
+                        <th>伸缩</th>
+                        <th style="width:30%;">栏目名</th>
+                        <th>状态</th>
+                        <th>属性</th>
+                        <th>模型</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="x-link">
+                    {volist name="cateRes" id="vo"}
+                        <tr id="{$vo.id}" pid="{$vo.pid}">
+                            <td>{$vo.id}</td>
+                            <td><input name="sort[{$vo.id}]" style="width:50px; text-align:center;" type="text" value="{$vo.sort}"></td>
+                            <td class="open">+</td>
+                            <td class="c{$i}" style="width:30%;"><span class="fh"></span><span><?php echo str_repeat('-', $vo['level']*8);?></span><a href="{:url('content/indexlst',['cate_id'=>$vo['id'],'model_id'=>$vo['model_id']])}" class="cate" pid="{$vo.pid}"><b>{$vo.cate_name}</b></a>
+                            <a style="float:right;" class="btn btn-sm btn-azure btn-addon" href="{:url('cate/add',array('cateid'=>$vo['id']))}"><i class="fa fa-plus"></i>添加子栏目</a>
+                            </td>
+                            <td align="center"><a cateid="{$vo.id}" onclick="changestatus(this);" {if condition="$vo['status'] eq 1"} class="btn btn-primary btn-sm shiny" {else/} class="btn btn-danger btn-sm shiny" {/if} >{if condition="$vo['status'] eq 1"}显示{else/}隐藏{/if}</a></td>
+                            <td>{if condition="$vo['cate_attr'] eq 1"}列表栏目{elseif condition="$vo['cate_attr'] eq 2"}外链栏目{else /}单页栏目{/if}</td>
+                            <td>{$vo.model_name}</td>
+                            <td class="td-manage">
+                                <a href="{:url('cate/edit',array('cateid'=>$vo['id']))}" class="btn btn-primary btn-sm shiny">
+                                    <i class="layui-icon"></i>编辑
+                                </a>
+                                <a href="{:url('cate/delete',array('cateid'=>$vo['id']))}" class="btn btn-danger btn-sm shiny">
+                                    <i class="layui-icon">&#xe640;</i>删除
+                                </a>
+                            </td>
+                        </tr>
+                    {/volist}
+                </tbody>
+            </table>
+
+        </div>
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-layui.js" charset="utf-8"></script>
+        <script>
+            layui.use(['element','layer','form'], function(){
+                $ = layui.jquery;//jquery
+              lement = layui.element();//面包导航
+              layer = layui.layer;//弹出层
+              form = layui.form();
+            })
+
+            //栏目伸缩状态js
+              $('tr[pid!=0]').hide();
+              $('.open').click(function(){
+                  var id=$(this).parents('tr').attr('id');
+                  if($(this).text()=='+'){
+                      $(this).text('-');
+                      $('tr[pid='+id+']').show();
+                  }else{
+                      $(this).text('+');
+                      $.ajax({
+                      type:"post",
+                      dataType:"json",
+                      data:{cateid:id},
+                      url:"{:url('Cate/ajaxlst')}",
+                      success:function(data){
+                          var sonids=[];
+                          var idsobj=$('tr[pid!=0]');
+                          idsobj.each(function(k,v){
+                              sonids.push($(this).attr('id'));
+                          });
+                          $.each(data,function(k,v){
+                              if($.inArray(v,sonids)){
+                                  $('tr[id='+v+']').hide();
+                                  $('tr[id='+v+']').find('span:first').text('+');
+                              }
+                          });
+                      }
+                  });
+                  }
+              });
+
+            //ajax异步修改栏目显示状态
+            function changestatus(o){
+                var cateid=$(o).attr("cateid");
+                $.ajax({
+                    type:"post",
+                    dataType:"json",
+                    data:{cateid:cateid},
+                    url:"{:url('Cate/changestatus')}",
+                    success:function(data){
+                        if(data==1){
+                            $(o).attr("class","btn btn-danger btn-sm shiny");
+                            $(o).text('隐藏');
+                        }else{
+                            $(o).attr("class","btn btn-primary btn-sm shiny");
+                            $(o).text('显示');
+                        }
+                    }
+                });
+            }
+
+        </script>
+    </body>
+</html>

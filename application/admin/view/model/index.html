@@ -1,0 +1,107 @@
+{include file="public/header"}
+
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" style="visibility: visible;">
+              <a><cite>首页</cite><span class="layui-box">&gt;</span></a>
+              <a href="{:url('model/index')}"><cite>模型管理</cite><span class="layui-box">&gt;</span></a>
+              <a><cite>模型列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+
+            <xblock>
+                <div class="layui-btn"><i class="layui-icon"></i><a href="{:url('model/add')}" id="add">添加</a></div>
+                <span class="x-right" style="line-height:40px">共有数据：{$confCount}条</span>
+            </xblock>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th style="width:30%;">模型名</th>
+                        <th>附加表名</th>
+                        <th>启用状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="modelRes" id="vo"}
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.model_name}</td>
+                        <td>{$prefix}{$vo.table_name}</td>
+                        <td>
+                            {if condition="$vo['status'] eq 1"}
+                                <a modelid="{$vo.id}" onclick="changestatus(this);" class="btn btn-primary btn-sm shiny">启用</a>
+                            {else /}
+                                <a modelid="{$vo.id}" onclick="changestatus(this);" class="btn btn-danger btn-sm shiny">禁用</a>
+                            {/if}
+                        </td>
+                        <td class="td-manage">
+                           <a href="{:url('model/edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-sm shiny">
+                                <i class="layui-icon"></i>编辑
+                           </a>
+                           <a href="{:url('ModelFields/index',array('id'=>$vo['id']))}" class="btn btn-primary btn-sm shiny">
+                                <i class="layui-icon"></i>字段列表
+                           </a>
+                           <a href="#" id="{$vo.id}" table_name="{$prefix}{$vo.table_name}" onClick="ajaxdel(this);" class="btn btn-danger btn-sm shiny">
+                                <i class="layui-icon">&#xe640;</i> 删除
+                            </a>
+                        </td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+
+            <div id="page">{$modelRes->render()}</div>
+        </div>
+    </body>
+    <script src="__STATIC__/js/layui/jquery.js" charset="utf-8"></script>
+    <script src="__STATIC__/js/layui/layui.all.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        //ajax异步修改模型启用状态
+        function changestatus(o){
+            var modelid=$(o).attr("modelid");//获取到那个的id
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                data:{modelid:modelid},
+                url:"{:url('Model/changestatus')}",
+                success:function(data){
+                    if(data==1){
+                        $(o).attr("class","btn btn-danger btn-sm shiny");
+                        $(o).text('禁用');
+                    }else{
+                        $(o).attr("class","btn btn-primary btn-sm shiny");
+                        $(o).text('启用');
+                    }
+                }
+            });
+        }
+
+        //ajax删除模型
+        function ajaxdel(b){
+            layer.confirm('确定要删除该模型吗？', {icon: 3, title:'提示'}, function(index){
+            //获取id和表名
+            var id=$(b).attr("id");
+            var table_name=$(b).attr("table_name");
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                data:{id:id,table_name:table_name},
+                url:"{:url('Model/ajaxdel')}",
+                success:function(data){
+                    if(data==1){
+                        layer.msg('删除模型成功！', {icon: 1});
+                        window.location.href="{:url('Model/index')}";
+                    }else{
+                        layer.msg('删除模型失败！', {icon: 2});
+                    }
+                }
+            });
+              layer.close(index);
+            });
+        }
+    </script>
+</html>

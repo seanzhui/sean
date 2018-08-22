@@ -1,0 +1,142 @@
+{include file="public/header"}
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" style="visibility: visible;">
+              <a><cite>首页</cite><span class="layui-box">&gt;</span></a>
+              <a href="{:url('admingroup/index')}"><cite>权限组管理</cite><span class="layui-box">&gt;</span></a>
+              <a><cite>权限组管理列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <form class="layui-form" id="form1" method="post" action="{:url('admingroup/power')}">
+                <input type="hidden" value="{$authGroups.id}" name="id">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户组名称</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" placeholder="用户组名称" name="title" value="{$authGroups.title}" required="" type="text">
+                        <div id="errusername" align="center"></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">分配权限</label>
+                    <div class="layui-input-block">
+                        <!-- 权限分配 -->
+                        <table class="table table-hover">
+                                <thead class="bordered-darkorange">
+                                    <tr>
+                                        <th>
+                                           <label style="padding:0 15px 0 0;">
+                                                <input id="chkAll" onclick="CheckAll(this.form)" value="全选" type="checkbox" class="colored-success checkbox-parent" type="checkbox">
+                                                <span class="text">权限全选</span>
+                                            </label>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="layui-form-item">
+                                    {foreach name="data" item="vo"}
+                                        <tr>
+                                            <td class="layui-input-block">
+                                                    <input id="{$vo.id}" value="{$vo.id}" title="" name="rules[]" dataid="id-{$vo.id}" <?php if(in_array($vo['id'], $rules)){ echo 'checked="checked"';}?> type="checkbox">
+                                                    <span>{$vo.title}</span>
+                                                    <i class="layui-icon layui-icon-ok"></i>
+                                            </td>
+                                        </tr>
+                                        {foreach name="vo['children']" item="vo2"}
+                                            <tr>
+                                                <td style="padding-left:50px;" class="layui-input-block">
+                                                        <input <?php if(in_array($vo2['id'], $rules)){ echo 'checked="checked"';}?> id="{$vo2.id}" value="{$vo2.id}" name="rules[]"  dataid="id-{$vo.id}-{$vo2.id}" type="checkbox">
+                                                        <span>{$vo2.title}</span>
+                                                        <i class="layui-icon layui-icon-ok"></i>
+                                                </td>
+                                            </tr>
+                                            {if condition="$vo2['children']"}
+                                                <tr>
+                                                    <td style="padding-left:100px;" class="layui-input-block">
+                                                        {foreach name="vo2['children']" item="vo3"}
+                                                            <label style="padding-right:30px;">
+                                                                <input <?php if(in_array($vo3['id'], $rules)){ echo 'checked="checked"';}?> id="{$vo3.id}" value="{$vo3.id}" name="rules[]" dataid="id-{$vo.id}-{$vo2.id}-{$vo3.id}" type="checkbox">
+                                                                <span>{$vo3.title}</span>
+                                                                <i class="layui-icon layui-icon-ok"></i>
+                                                            </label>
+                                                        {/foreach}
+                                                    </td>
+                                                </tr>
+                                            {/if}
+                                        {/foreach}
+                                    {/foreach}
+                                </tbody>
+                            </table>
+                        <!-- 权限分配 -->
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="">
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-layui.js" charset="utf-8"></script>
+        <script>
+            layui.use(['form','layer'], function(){
+                $ = layui.jquery;var form = layui.form(),layer = layui.layer;
+            });
+        </script>
+        <script type="text/javascript">
+                /* 多选判断 */
+            function CheckAll(form) {
+                for (var i = 0; i < form.elements.length; i++) {
+                    var e = form.elements[i];
+                    if (e.Name != 'chkAll' && e.disabled == false) {
+                        e.checked = form.chkAll.checked;
+                    }
+                }
+            }
+        </script>
+        <script type="text/javascript">
+            /* 权限配置 */
+            $(function () {
+            //动态选择框，上下级选中状态变化
+            $('input.checkbox-parent').on('change', function () {
+                var dataid = $(this).attr("dataid");
+                $('input[dataid^=' + dataid + ']').prop('checked', $(this).is(':checked'));
+            });
+            $('input.checkbox-child').on('change', function () {
+                var dataid = $(this).attr("dataid");
+                dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                var parent = $('input[dataid=' + dataid + ']');
+                if ($(this).is(':checked')) {
+                    parent.prop('checked', true);
+                    //循环到顶级
+                    while (dataid.lastIndexOf("-") != 2) {
+                        dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                        parent = $('input[dataid=' + dataid + ']');
+                        parent.prop('checked', true);
+                    }
+                } else {
+                    //父级
+                    if ($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                        parent.prop('checked', false);
+                        //循环到顶级
+                        while (dataid.lastIndexOf("-") != 2) {
+                            dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                            parent = $('input[dataid=' + dataid + ']');
+                            if ($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                                parent.prop('checked', false);
+                            }
+                        }
+                    }
+                }
+            });
+            });
+        </script>
+
+    </body>
+
+</html>

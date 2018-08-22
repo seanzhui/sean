@@ -1,0 +1,71 @@
+{include file="public/header"}
+<script>
+
+    function checkusername(){
+        var myform = document.getElementById("form1");
+        var title = myform.title.value.length;
+        if(title < 1||title>12)
+        {
+            errusername.innerHTML = "<font color='red'>用户组名称不符合要求</font>";
+            return false;
+        }else{
+            errusername.innerHTML = "<font color='green'>用户组名称符合要求</font>";
+            return true;
+        }
+    }
+
+</script>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" style="visibility: visible;">
+              <a><cite>首页</cite><span class="layui-box">&gt;</span></a>
+              <a href="{:url('admingroup/index')}"><cite>权限组管理</cite><span class="layui-box">&gt;</span></a>
+              <a><cite>权限组管理列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <form class="layui-form" id="form1" method="post" action="{:url('admingroup/create')}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户组名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" onblur="checkusername()" autocomplete="off" placeholder="请输入您的用户组名称" class="layui-input">
+                        <div id="errusername" align="center"></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开启状态</label>
+                    <div class="col-sm-9">
+                        <div style="float:left; padding-left:10px;">
+                            <label>
+                                <input checked="checked" name="status" value="1" title="开启" type="radio">
+                            </label>
+                        </div>
+                        <div class="layui-input-block">
+                            <label>
+                                <input  name="status" value="0" title="关闭" type="radio">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="">
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-layui.js" charset="utf-8"></script>
+        <script>
+            layui.use(['form','layer'], function(){
+                $ = layui.jquery;var form = layui.form(),layer = layui.layer;
+            });
+        </script>
+
+    </body>
+
+</html>

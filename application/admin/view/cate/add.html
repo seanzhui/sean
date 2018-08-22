@@ -1,0 +1,210 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__STATIC__/js/layui/css/layui.css">
+<script src="__STATIC__/js/layui/jquery.js" charset="utf-8"></script>
+{include file="public/footerjs"}
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" style="visibility: visible;">
+              <a><cite>首页</cite><span class="layui-box">&gt;</span></a>
+              <a href="{:url('cate/index')}"><cite>栏目管理</cite><span class="layui-box">&gt;</span></a>
+              <a><cite>配置栏目列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <form class="layui-form" id="form1" method="post" action="{:url('cate/create')}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属模型</label>
+                    <div class="layui-input-block" >
+                        <select name="model_id">
+                            <option value="">选择模型</option>
+                           {volist name="modelRes" id="model"}
+                           <option value="{$model.id}">{$model.model_name}</option>
+                           {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">上级栏目</label>
+                    <div class="layui-input-block" >
+                        <select name="pid">
+                            <option value="0">顶级栏目</option>
+                            {volist name="cateRes" id="cate"}
+                                <option {if condition="$cate['id'] eq $cateid"} selected="selected" {/if} value="{$cate.id}"><?php echo str_repeat('-', $cate['level']*8);?>{$cate.cate_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="AppId" class="layui-form-label">隐藏栏目</label>
+                    <div class="layui-input-block">
+                      <input type="checkbox" checked="" name="status" lay-skin="switch" lay-filter="switchTest" title="开关" value="0">
+                      <div class="layui-unselect layui-form-switch layui-form-onswitch"><i></i></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">栏目属性</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="cate_attr" value="1" value="列表栏目" title="列表栏目" checked="">
+                        <div class="layui-unselect layui-form-radio">
+                            <i class="layui-anim layui-icon"></i>
+                            <div>列表栏目</div>
+                        </div>
+                        <input type="radio" name="cate_attr" value="2" value="外链栏目" title="外链栏目">
+                        <div class="layui-unselect layui-form-radio layui-form-radioed">
+                            <i class="layui-anim layui-icon layui-anim-scaleSpring"></i>
+                            <div>外链栏目</div>
+                        </div>
+                        <input type="radio" name="cate_attr" value="3" value="单页栏目" title="单页栏目(单页内容请填下面栏目内容)">
+                        <div class="layui-unselect layui-form-radio layui-form-radioed">
+                            <i class="layui-anim layui-icon layui-anim-scaleSpring"></i>
+                            <div>单页栏目</div>
+                        </div>
+                        <input type="radio" name="cate_attr" value="4" value="生活分享" title="生活分享">
+                        <div class="layui-unselect layui-form-radio layui-form-radioed">
+                            <i class="layui-anim layui-icon layui-anim-scaleSpring"></i>
+                            <div>生活分享</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">缩略图</label>
+                    <div class="layui-input-block">
+                        <a id="btn-thumb">
+                            <img src="__STATIC__/images/thumb.jpg" id="thumb-preview" width="100" height="100" style="cursor:pointer"/>
+                        </a>
+                        <div id="tips-thumb"></div>
+                        <input type="hidden" name="img" id="input-thumb" value="">
+                        <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="demo1" id="cancel">删除图片</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">栏目名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="cate_name" autocomplete="off" placeholder="请输入栏目名称" class="layui-input" required="required" id="cate_name">
+                        <div id="errusername" align="center"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键词</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="keywords"  autocomplete="off" placeholder="请输入关键词" class="layui-input">
+                        <div id="errename" align="center"></div>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">外链地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="link"  autocomplete="off" placeholder="请以“http://”开头" class="layui-input">
+                        <div id="errename" align="center"></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">栏目简介</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入简介" name="desc" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">栏目内容</label>
+                    <div class="layui-input-block">
+                         <textarea id="content" name="content"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="">
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-admin.js"></script>
+        <script src="__STATIC__/js/layui/layui.all.js" charset="utf-8"></script>
+        <script>
+            layui.use('upload', function(){
+                var $ = layui.jquery;
+                var upload = layui.upload;
+
+                var uploadInst = upload.render({
+                    elem:'#btn-thumb',
+                    url: "{:url('admin/cate/upload')}",//上传接口
+                    size:2000,
+                    exts: 'jpg|png|jpeg',
+                    before: function(obj){
+                        obj.preview(function(index, file, result){
+                            $('#thumb-preview').attr('src',result);
+                        });
+                    },
+                    done: function(res){
+                        console.log(res);
+                        if(res.code == 0){
+                            return layer.msg(res.message);
+                        }
+                        $('#input-thumb').val(res.filepath);
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            $(function(){
+                //失去焦点时,检查用户名是否重复
+                $("#cate_name").blur(function(){
+                    $.ajax({
+                        type: 'GET',
+                        url: "checkUserName",
+                       data:{name:$(this).val()},
+                        dataType: 'json',
+                        success: function(data){
+                            if (data.status == 1) {
+                               alert(data.message);
+                            } else {
+                                alert(data.message);
+                            }
+                        }
+                    });
+                });
+            })
+
+            $("#cancel").click(function(){
+                 var imgurl=$("input[name='img']").val();
+                 if(!imgurl){
+                     // alert('请先上传图片！');
+                     layer.msg('请先上传图片！', {icon: 2});
+                     return false;
+                 }
+                 // if(!confirm('确定要撤销图片吗？')){
+                 //     return false;
+                 // }
+                 layer.confirm('确定要撤销图片吗？', {icon: 3, title:'提示'}, function(index){
+                   //do something
+                 $("#cateimgdiv").hide();
+                 $("input[name='img']").val('');
+                 $.ajax({
+                     type:"post",
+                     dataType:"json",
+                     data:{imgurl:imgurl},
+                     url:"{:url('Cate/delimg')}",
+                     success:function(data){
+                         if(data==1){
+                             layer.msg('撤销成功！', {icon: 1});
+                         }else{
+                             layer.msg('撤销失败！', {icon: 2});
+                         }
+                     }
+                 });
+                   layer.close(index);
+                 });
+
+             });
+        </script>
+    </body>
+
+</html>

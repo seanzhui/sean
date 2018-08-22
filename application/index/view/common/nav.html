@@ -1,0 +1,47 @@
+<nav class="navbar navbar-default navbar-fixed-top probootstrap-navbar">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{:url('index/index')}" title="sean">sean</a>
+    </div>
+
+    <div id="navbar-collapse" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{:url('index/index')}">Home</a></li>
+            {volist id="cate" name="cateRes"}
+                <li {if condition="$cate['children'] neq 0"} class="dropdown" {/if}>
+                    <a href="
+                        {if condition="$cate['cate_attr'] eq 1"}{:url('article/index',array('cid'=>$cate['id']))}{/if}
+                        {if condition="$cate['cate_attr'] eq 2"}{$cate.link}{/if}
+                        {if condition="$cate['cate_attr'] eq 3"}{:url('about/index',array('cid'=>$cate['id']))}{/if}
+                        {if condition="$cate['cate_attr'] eq 4"}{:url('gallery/index',array('cid'=>$cate['id']))}{/if}
+                        ">
+                        <strong>{$cate.cate_name}</strong>
+                    </a>
+                    {if condition="$cate['children']"}
+                        <ul class="dropdown-menu">
+                            {volist name="$cate['children']" id="sonCate"}
+                                <li>
+                                    <a href="
+                                        {if condition="$cate['cate_attr'] eq 1"}{:url('article/index',array('cid'=>$cate['id']))}{/if}
+                                        {if condition="$cate['cate_attr'] eq 2"}{$cate.link}{/if}
+                                        {if condition="$cate['cate_attr'] eq 3"}{:url('about/index',array('cid'=>$cate['id']))}{/if}
+                                        {if condition="$cate['cate_attr'] eq 4"}{:url('gallery/index',array('cid'=>$cate['id']))}{/if}
+                                    "><span>{$sonCate.cate_name}</span>
+                                    </a>
+                                </li>
+                            {/volist}
+                        </ul>
+                    {/if}
+                </li>
+            {/volist}
+            <li><a href="{:url('contact/index')}">联系</a></li>
+        </ul>
+    </div>
+  </div>
+</nav>

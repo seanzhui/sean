@@ -1,0 +1,101 @@
+{include file="public/header"}
+<style type="text/css">
+
+</style>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" style="visibility: visible;">
+                <a><cite>首页</cite><span class="layui-box">&gt;</span></a>
+                <a href="{:url('content/index')}"><cite>文章管理</cite><span class="layui-box">&gt;</span></a>
+                <a><cite>文章列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+
+            <xblock>
+                {if condition="$modelId neq 0"}
+                    <div class="layui-btn"><i class="layui-icon"></i><a href="{:url('content/add',['cate_id'=>$cateId,'model_id'=>$modelId])}" id="add">添加</a></div>
+                {/if}
+                <span class="x-right" style="line-height:40px">共有数据：{$confCount}条</span>
+            </xblock>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>文章标题</th>
+                        <th>属性</th>
+                        <th>所属栏目</th>
+                        <th>所属模型</th>
+                        <th>缩略图</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="artRes" id="vo"}
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.title}</td>
+                            <td align="center">
+                                <?php if($vo['attr']):
+                                     $attrArr=explode(',',$vo['attr']);
+                                ?>
+                                <?php foreach($attrArr as $v):?>
+                                    <?php echo "<span class='btn btn-info'>".$v."</span>";?>
+                                <?php endforeach;?>
+                                <?php else:?>
+                                    <span class="label label-orange">暂无属性</span>
+                                <?php endif;?>
+                            </td>
+                            <td>{$vo.cate_name}</td>
+                            <td>{$vo.model_name}</td>
+                            <td>
+                                <img src="/public/static/index/uploads/article/{$vo.litpic}" id="thumb-preview" width="100" height="100" style="cursor:pointer"/>
+                            </td>
+                            <td class="td-manage">
+                               <a href="{:url('content/edit',array('art_id'=>$vo['id'],'model_id'=>$vo['model_id']))}" class="btn btn-primary btn-sm shiny">
+                                    <i class="layui-icon"></i>编辑
+                               </a>
+                               <a href="{:url('content/delete',array('art_id'=>$vo['id'],'model_id'=>$vo['model_id']))}"  class="btn btn-danger btn-sm shiny">
+                                    <i class="layui-icon">&#xe640;</i>删除
+                               </a>
+
+                            </td>
+                        </tr>
+                    {/volist}
+                </tbody>
+            </table>
+
+            <div id="page">{$artRes->render()}</div>
+        </div>
+    </body>
+    <script src="__STATIC__/js/layui/jquery.js" charset="utf-8"></script>
+    <script src="__STATIC__/js/layui/layui.all.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        //ajax删除字段
+        function ajaxdel(o){
+            layer.confirm('确定要删除该字段吗？', {icon: 3, title:'提示'}, function(index){
+
+                ('art_id'=>$art['id'],'model_id'=>$art['model_id'])
+
+            var id=$(o).attr("id");
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                data:{id:id,art_id:$vo['id'],model_id:$vo['model_id']}.serialize(),
+                url:"{:url('content/ajaxdel')}",
+                success:function(data){
+                    if(data==1){
+                        layer.msg('删除字段成功！', {icon: 1});
+                        window.location.href="{:url('ModelFields/index')}";
+                    }else{
+                        layer.msg('删除字段失败！', {icon: 2});
+                    }
+                }
+            });
+              layer.close(index);
+            });
+        }
+    </script>
+
+</html>

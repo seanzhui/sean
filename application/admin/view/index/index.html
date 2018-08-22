@@ -1,0 +1,207 @@
+{include file="public/header"}
+    <body>
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header header header-demo">
+                <div class="layui-main">
+                    <a class="logo" href="{:url('index/index')}">sean</a>
+                    <ul class="layui-nav" lay-filter="">
+                        <li class="layui-nav-item">
+                            <img src="__STATIC__/images{$admindate.img}" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt="" title="22">
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">{$Think.session.uname}</a>
+                            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                                <dd><a href="{:url('admin/edit',array('id'=>$Request.session.id))}">个人信息</a></dd>
+                                <dd><a href="{:url('index/clear_sys_cache')}">清除缓存</a></dd>
+                                <dd><a href="{:url('admin/logout')}">退出</a></dd>
+                            </dl>
+                         </li>
+                        <li class="layui-nav-item">
+                            <a href="" title="消息">
+                                <i class="layui-icon" style="top: 1px;">&#xe63a;</i>
+                                <span>{$messageStatus}</span>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item x-index"><a href="{:url('index/index/index')}">前台首页</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="layui-side layui-bg-black x-side">
+                <div class="layui-side-scroll">
+                    <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
+
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe612;</i><cite>管理员</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="">
+                                    <a href="javascript:;" _href="{:url('admin/index')}">
+                                        <cite>管理员列表</cite>
+                                    </a>
+                                </dd>
+                            </dl>
+                        </li>
+
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe642;</i><cite>权限管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="">
+                                    <dd class="">
+                                        <a href="javascript:;" _href="{:url('admingroup/index')}">
+                                            <cite>用户组管理</cite>
+                                        </a>
+                                    </dd>
+                                </dd>
+                                <dd class="">
+                                    <dd class="">
+                                        <a href="javascript:;" _href="{:url('authrule/index')}">
+                                            <cite>权限管理</cite>
+                                        </a>
+                                    </dd>
+                                </dd>
+                            </dl>
+                        </li>
+
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe606;</i><cite>评论管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="">
+                                    <a href="javascript:;" _href="{:url('message/index')}">
+                                        <cite>评论列表</cite>
+                                    </a>
+                                </dd>
+                            </dl>
+                        </li>
+
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe62d;</i><cite>邮件管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+
+                                <dd class="">
+                                    <dd class="">
+                                        <a href="javascript:;" _href="{:url('emailconf/index')}">
+                                            <cite>邮件设置</cite>
+                                        </a>
+                                    </dd>
+                                </dd>
+                            </dl>
+                        </li>
+
+
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe634;</i><cite>文章管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="">
+                                    <dd class="">
+                                        <a href="javascript:;" _href="{:url('content/index')}">
+                                            <cite>文章列表</cite>
+                                        </a>
+                                    </dd>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe630;</i><cite>栏目管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="">
+                                    <a href="javascript:;" _href="{:url('cate/index')}">
+                                        <cite>栏目列表</cite>
+                                    </a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe630;</i><cite>模型管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="">
+                                    <a href="javascript:;" _href="{:url('Model/index')}">
+                                        <cite>模型列表</cite>
+                                    </a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe630;</i><cite>字段管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="">
+                                    <a href="javascript:;" _href="{:url('ModelFields/index')}">
+                                        <cite>字段列表</cite>
+                                    </a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe614;</i><cite>系统设置</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="">
+                                    <a href="javascript:;" _href="{:url('conf/indexlst')}">
+                                        <cite>配置列表</cite>
+                                    </a>
+                                </dd>
+                                <dd class="">
+                                    <a href="javascript:;" _href="{:url('conf/index')}">
+                                        <cite>配置管理</cite>
+                                    </a>
+                                </dd>
+                            </dl>
+                        </li>
+                        {volist name="cateRes" id="vo"}
+                        <?php if($vo['cate_attr']==1):?>
+                            <li class="layui-nav-item">
+                                <a class="javascript:;" href="javascript:;">
+                                    <i class="layui-icon" style="top: 3px;">&#xe62d;</i><cite>{$vo.cate_name}</cite>
+                                </a>
+                                <dl class="layui-nav-child">
+                                    <dd class="">
+                                        <a href="javascript:;" _href="{:url('content/indexlst',['cate_id'=>$vo['id'],'model_id'=>$vo['model_id']])}">
+                                            <cite>添加{$vo.cate_name}文章</cite>
+                                        </a>
+                                    </dd>
+                                </dl>
+                            </li>
+                        <?php endif;?>
+                        {/volist}
+                    </ul>
+                </div>
+
+            </div>
+            <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true">
+                <div class="x-slide_left"></div>
+                <ul class="layui-tab-title">
+                    <li class="layui-this">
+                        我的桌面
+                        <i class="layui-icon layui-unselect layui-tab-close">ဆ</i>
+                    </li>
+                </ul>
+                <div class="layui-tab-content site-demo site-demo-body">
+                    <div class="layui-tab-item layui-show">
+                        <iframe frameborder="0" src="{:url('index/welcome')}" class="x-iframe"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="site-mobile-shade">
+            </div>
+        </div>
+
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-admin.js"></script>
+
+    </body>
+</html>

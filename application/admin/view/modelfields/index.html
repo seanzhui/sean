@@ -1,0 +1,95 @@
+{include file="public/header"}
+<style type="text/css">
+th {align:center;}
+td{align:center;}
+</style>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" style="visibility: visible;">
+              <a><cite>首页</cite><span class="layui-box">&gt;</span></a>
+              <a href="{:url('modelfieds/index')}"><cite>字段管理</cite><span class="layui-box">&gt;</span></a>
+              <a><cite>字段列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+
+            <xblock>
+                <div class="layui-btn"><i class="layui-icon"></i><a href="{:url('ModelFields/add')}" id="add">添加</a></div>
+                <span class="x-right" style="line-height:40px">共有数据：{$confCount}条</span>
+            </xblock>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>中文名称</th>
+                        <th>英文名称</th>
+                        <th>字段类型</th>
+                        <th>所属模型</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="fieldRes" id="vo"}
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.field_cname}</td>
+                            <td>{$vo.field_ename}</td>
+                            <td>
+                                {switch $vo.field_type}
+                                     {case 1} 单行文本 {/case}
+                                     {case 2} 单选安按钮 {/case}
+                                     {case 3} 复选框 {/case}
+                                     {case 4} 下拉菜单 {/case}
+                                     {case 5} 文本域 {/case}
+                                     {case 6} 附件 {/case}
+                                     {case 7} 浮点 {/case}
+                                     {case 8} 整型 {/case}
+                                     {case 9} 长文本类型 {/case}
+                                 {/switch}
+                            </td>
+                            <td>{$vo.model_name}</td>
+                            <td class="td-manage">
+                               <a href="{:url('ModelFields/edit',['id'=>$vo['id']])}" class="btn btn-primary btn-sm shiny">
+                                    <i class="layui-icon"></i>编辑
+                               </a>
+                               <a href="#" id="{$vo.id}" onClick="ajaxdel(this);"  class="btn btn-danger btn-sm shiny">
+                                    <i class="layui-icon">&#xe640;</i>删除
+                               </a>
+
+                            </td>
+                        </tr>
+                    {/volist}
+                </tbody>
+            </table>
+
+            <div id="page">{$fieldRes->render()}</div>
+        </div>
+    </body>
+    <script src="__STATIC__/js/layui/jquery.js" charset="utf-8"></script>
+    <script src="__STATIC__/js/layui/layui.all.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        //ajax删除字段
+        function ajaxdel(o){
+            layer.confirm('确定要删除该字段吗？', {icon: 3, title:'提示'}, function(index){
+            var id=$(o).attr("id");
+            $.ajax({
+                type:"post",
+                dataType:"json",
+                data:{id:id},
+                url:"{:url('ModelFields/ajaxdel')}",
+                success:function(data){
+                    if(data==1){
+                        layer.msg('删除字段成功！', {icon: 1});
+                        window.location.href="{:url('ModelFields/index')}";
+                    }else{
+                        layer.msg('删除字段失败！', {icon: 2});
+                    }
+                }
+            });
+              layer.close(index);
+            });
+        }
+    </script>
+
+</html>

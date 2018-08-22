@@ -1,0 +1,51 @@
+{include file="public/header"}
+    <body style=" background: url(__STATIC__/images/login.jpg)no-repeat;">
+        <div class="x-box">
+            <div class="x-mid">
+                <div class="x-avtar">
+                    <img src="__STATIC__/images/logo.png" alt="">
+                </div>
+                <div class="input">
+                    <form class="layui-form" action="{:url('login/index')}" method="post">
+                        <div class="layui-form-item x-login-box">
+                            <label for="username" class="layui-form-label">
+                                <i class="layui-icon">&#xe612;</i>
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="username" name="uname" required="" lay-verify="用户名"
+                                autocomplete="off" placeholder="username" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item x-login-box">
+                            <label for="pass" class="layui-form-label">
+                                <i class="layui-icon">&#xe628;</i>
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="password" id="pass" name="password" required="" lay-verify="密码" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item x-login-box">
+                            <label for="pass" class="layui-form-label">
+                                <i class="layui-icon">&#xe634;</i>
+                            </label>
+                            <div class="layui-input-inline">
+                                <input style="width:50%; float:left;" class="form-control" placeholder="验证码" name="code" type="text">
+                                <img class="form-control" style="width:50%; border:0; padding:0 0 0 5px; float:left; cursor:pointer;" onclick="this.src='{:captcha_src()}?'+Math.random()" src="{:captcha_src()}">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item" id="loginbtn">
+                            <button  class="layui-btn" lay-filter="save" lay-submit="">
+                                登 录
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p style="color:#fff;text-align: center;">Copyright © 2018.Company name All rights sean </p>
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+
+    </body>
+
+</html>

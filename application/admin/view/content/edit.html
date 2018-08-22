@@ -1,0 +1,323 @@
+{include file="public/header"}
+
+<link rel="stylesheet" href="__STATIC__/js/layui/css/layui.css">
+<script src="__STATIC__/js/layui/jquery.js" charset="utf-8"></script>
+{include file="public/footerjs"}
+
+
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" style="visibility: visible;">
+                <a><cite>首页</cite><span class="layui-box">&gt;</span></a>
+                <a href="{:url('content/index')}"><cite>文章管理</cite><span class="layui-box">&gt;</span></a>
+                <a><cite>文章列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <form class="layui-form" id="form1" method="post" action="{:url('content/edit')}" enctype="multipart/form-data">
+                <input type="hidden" name="model_id" value="{$modelId}">
+                <input type="hidden" name="id" value="{$arts.id}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属栏目</label>
+                    <div class="layui-input-block" >
+                        {volist name="cateRes" id="cate"}
+                            {if condition="$cate['id'] eq $cateId"}
+                            <span class="form-control">{$cate.cate_name} </span>
+                            <input type="hidden" name="cate_id" value="{$cate.id}">
+                            {/if}
+                        {/volist}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title"  value="{$arts.title}" autocomplete="off" placeholder="请输入标题" class="layui-input" required="required" id="cate_name">
+                        <div id="errusername" align="center"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键词</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="keywords"  value="{$arts.keywords}" autocomplete="off" placeholder="请输入关键词" class="layui-input">
+                        <div id="errename" align="center"></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">属性</label>
+                    <div class="layui-input-block">
+                        <?php
+                            $attr=$arts['attr'];
+                            $attr=explode(',', $attr);
+                        ?>
+                        <input type="checkbox" name="attr[]" title="头条" value="头条" <?php if(in_array('头条', $attr)){echo 'checked="checked"';}?>>
+                        <div class="layui-unselect layui-form-checkbox layui-form-checked">
+                            <span>头条</span>
+                            <i class="layui-icon layui-icon-ok"></i>
+                        </div>
+                        <input type="checkbox" name="attr[]" title="推荐" value="推荐" <?php if(in_array('推荐', $attr)){echo 'checked="checked"';}?>>
+                        <div class="layui-unselect layui-form-checkbox layui-form-checked">
+                            <span>推荐</span>
+                            <i class="layui-icon layui-icon-ok"></i>
+                        </div>
+                        <input type="checkbox" name="attr[]" title="轮播" value="轮播" <?php if(in_array('轮播', $attr)){echo 'checked="checked"';}?>>
+                        <div class="layui-unselect layui-form-checkbox layui-form-checked">
+                            <span>轮播</span>
+                            <i class="layui-icon layui-icon-ok"></i>
+                        </div>
+                        <input type="checkbox" name="attr[]" title="加粗" value="加粗" <?php if(in_array('加粗', $attr)){echo 'checked="checked"';}?>>
+                        <div class="layui-unselect layui-form-checkbox layui-form-checked">
+                            <span>加粗</span>
+                            <i class="layui-icon layui-icon-ok"></i>
+                        </div>
+                        <input type="checkbox" name="attr[]" title="图片" value="图片" <?php if(in_array('图片', $attr)){echo 'checked="checked"';}?>>
+                        <div class="layui-unselect layui-form-checkbox layui-form-checked">
+                            <span>图片</span>
+                            <i class="layui-icon layui-icon-ok"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">作者</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="writer"  value="{$arts.writer}" autocomplete="off" placeholder="作者" class="layui-input">
+                        <div id="errename" align="center"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">来源</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="source"  value="{$arts.source}" autocomplete="off" placeholder="来源" class="layui-input">
+                        <div id="errename" align="center"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">点击数</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="click" value="{$arts.click}" autocomplete="off" placeholder="点击数" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入描述" name="description" class="layui-textarea">{$arts.description}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">缩略图</label>
+                    <div class="layui-input-block">
+                        <a id="btn-thumb">
+                            <img src="/public/static/index/uploads/article/{$arts.litpic}" id="thumb-preview" width="100" height="100" style="cursor:pointer"/>
+                        </a>
+                        <div id="tips-thumb"></div>
+                        <input type="hidden" name="litpic" id="input-thumb" value="{$arts.litpic}">
+                        <button class="layui-btn layui-btn-danger" lay-submit="" lay-filter="demo1" id="cancel">删除图片</button>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">内容</label>
+                    <div class="layui-input-block">
+                        <textarea id="content" name="content">{$arts.content}</textarea>
+                    </div>
+                </div>
+
+                <!-- 自定义字段开始 -->
+                <?php foreach ($diyFields as $k => $v):?>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><?php echo $v['field_cname'];?></label>
+                        <div class="layui-input-block">
+                            <!-- 字段类型：1：单行文本 2：单选安按钮 3：复选框 4：下拉菜单 5：文本域 6：附件 7：浮点 8：整型 9：长文本类型 longtext  -->
+                            <!-- 178为单行文本 ，5为文本域，6为附件，2为单选(有可选值)，3为复选(有可选值)，4为下拉框，9为长文本-->
+                            <!--2 如果有值再执行，为单选(有可选值)，explode把字符串打散成数组，$v1为可选值 -->
+                            <!--3 如果有值再执行，为复选(有可选值)，explode把字符串打散成数组，$v1为可选值 -->
+                            <!--4 如果有值再执行，为下拉框，explode把字符串打散成数组，$v1为可选值 -->
+                            <!--5 文本域 -->
+                            <!--6 附件-->
+                            <!--9 富文本，也就是百度编辑器-->
+                            <?php switch ($v['field_type']) {
+                                case 1:
+                                case 7:
+                                case 8:
+                                    echo "<input type='text'  value='".$diyvals[$v['field_ename']]."' name='".$v['field_ename']."' class='layui-input'>";
+                                    break;
+                                case 5:
+                                    echo "<textarea class='layui-textarea' name='".$v['field_ename']."'>".$diyvals[$v['field_ename']]."</textarea>";
+                                    break;
+                                case 6:
+                                    echo "<input type='file' name='".$v['field_ename']."' >";
+                                    if($diyvals[$v['field_ename']]){
+                                        echo "<img src='/public/static/index/uploads/attimg/".$diyvals[$v['field_ename']]."' height='60'>
+                                            <a href='javascript:;' onclick='delimg(this);'>删除</a>
+                                        ";
+                                    }
+                                    break;
+                                case 2:
+                                    if($v['field_values']){
+                                        $arr=explode(',', $v['field_values']);
+                                        foreach ($arr as $k1 => $v1) {
+                                            if($diyvals[$v['field_ename']]==$v1){
+                                                $check='checked="checked"';
+                                            }else{
+                                                $check='';
+                                            }
+                                            echo "<div style='float:left; padding-left:10px;'>";
+                                            echo "<label>";
+                                            echo "<input type='radio' ".$check." name='".$v['field_ename']."' value='".$v1."'  title='$v1'>";
+                                            echo "</label>";
+                                            echo "</div>";
+                                        }
+                                    }
+                                    break;
+
+                                case 3:
+                                    if($v['field_values']){
+                                        $arr=explode(',', $v['field_values']);
+                                        $section=$diyvals[$v['field_ename']];
+                                        $section=explode(',', $section);
+                                        foreach ($arr as $k1 => $v1) {
+                                            if(in_array($v1, $section)){
+                                                    $check='checked="checked"';
+                                                }else{
+                                                    $check='';
+                                                }
+                                            echo "<input type='checkbox' ".$check." name='".$v['field_ename']."[]' value='".$v1."' class='colored-blue' title='$v1'>";
+                                            echo "<div class='layui-unselect layui-form-checkbox layui-form-checked'>";
+                                            echo "<span class='text'>$v1</span>";
+                                            echo "<i class='layui-icon layui-icon-ok'></i>";
+                                            echo "</div>";
+                                        }
+                                    }
+                                    break;
+                                    case 4:
+                                        if($v['field_values']){
+                                            $arr=explode(',', $v['field_values']);
+                                            echo "<select name='".$v['field_ename']."'>";
+                                            foreach ($arr as $k1 => $v1) {
+                                                if($diyvals[$v['field_ename']]==$v1){
+                                                    $select='selected="selected"';
+                                                }else{
+                                                    $select='';
+                                                }
+                                                echo "<option ".$select." value='".$v1."'>".$v1."</option>";
+                                            }
+                                            echo "</select>";
+                                        }
+                                        break;
+                                case 9:
+                                    echo get_ueditor($v['field_ename'],$diyvals[$v['field_ename']]);
+                                    break;
+                                default:
+                                    echo "<input type='text' name='".$v['field_ename']."' class='layui-input'>";
+                                    break;
+                            }?>
+                        </div>
+                    </div>
+                <?php endforeach;?>
+                <!-- 自定义字段结束 -->
+                <script type="text/javascript">
+                     function delimg(o){
+                         layer.confirm('确定要撤销图片吗？', {icon: 3, title:'提示'}, function(index){
+                         var img=$(o).prev();
+                         var input=img.prev();
+                         var field_name=input.attr("name");
+                         img.remove();
+                         $(o).remove();
+                         var aid="{$aid}";
+                         var model_id="{$modelId}";
+                         $.ajax({
+                             type:"POST",
+                             url:"{:url('Content/ajaxDelImg')}",
+                             dataType:"json",
+                             data:{'aid':aid,'model_id':model_id,'field_name':field_name},
+                             success:function(data){
+                                 if(data==1){
+                                     layer.msg('删除成功！', {icon: 1});
+                                 }else{
+                                     layer.msg('删除失败！', {icon: 2});
+                                 }
+                             }
+                         });
+
+                         layer.close(index);
+                         });
+
+                     }
+                </script>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="">
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-admin.js"></script>
+        <script src="__STATIC__/js/layui/layui.all.js" charset="utf-8"></script>
+        <script>
+            layui.use('upload', function(){
+                var $ = layui.jquery;
+                var upload = layui.upload;
+                var uploadInst = upload.render({
+                    elem:'#btn-thumb',
+                    url: "{:url('admin/content/upload')}",//上传接口
+                    size:2000,
+                    exts: 'jpg|png|jpeg',
+                    before: function(obj){
+                        obj.preview(function(index, file, result){
+                            $('#thumb-preview').attr('src',result);
+                        });
+                    },
+                    done: function(res){
+                        console.log(res);
+                        if(res.code == 0){
+                            return layer.msg(res.message);
+                        }
+                        $('#input-thumb').val(res.filepath);
+                    }
+                });
+            });
+        </script>
+
+        <script>
+
+            $("#cancel").click(function(){
+                 var imgurl=$("input[name='litpic']").val();
+                 if(!imgurl){
+                     // alert('请先上传图片！');
+                     layer.msg('请先上传图片！', {icon: 2});
+                     return false;
+                 }
+                 // if(!confirm('确定要撤销图片吗？')){
+                 //     return false;
+                 // }
+                 layer.confirm('确定要撤销图片吗？', {icon: 3, title:'提示'}, function(index){
+                   //do something
+                 $("#cateimgdiv").hide();
+                 $("input[name='litpic']").val('');
+                 $.ajax({
+                     type:"post",
+                     dataType:"json",
+                     data:{imgurl:imgurl},
+                     url:"{:url('content/delimg')}",
+                     success:function(data){
+                         if(data==1){
+                             layer.msg('撤销成功！', {icon: 1});
+                         }else{
+                             layer.msg('撤销失败！', {icon: 2});
+                         }
+                     }
+                 });
+                   layer.close(index);
+                 });
+
+             });
+        </script>
+    </body>
+
+</html>

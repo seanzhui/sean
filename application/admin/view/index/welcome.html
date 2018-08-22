@@ -1,0 +1,84 @@
+{include file="public/header"}
+    <body>
+        <div class="x-body">
+            <blockquote class="layui-elem-quote">
+                <p>登录次数：{$admindate.login_count} </p>
+                <p>上次登录IP：0.0.0.0 上次登录时间：{$admindate.last_time|date="Y年m月d日 H时i分s秒",###}</p>
+            </blockquote>
+
+
+            <fieldset class="layui-elem-field layui-field-title site-title">
+              <legend><a name="default">信息统计</a></legend>
+            </fieldset>
+            <table class="layui-table" style="margin: 30px 0;">
+                <thead>
+                    <tr>
+                        <th>文章数量</th>
+                        <th>留言数量</th>
+                        <th>会员数量</th>
+                        <th>登陆数量</th>
+                        <th>登陆ip</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td>{$contentCount}</td>
+                    <td>{$messageStatus}</td>
+                    <td>124</td>
+                    <td>124</td>
+                    <td>{$admindate.loat_ip}</td>
+                </tbody>
+            </table>
+            <fieldset class="layui-elem-field layui-field-title site-title">
+              <legend><a name="default">系统信息</a></legend>
+            </fieldset>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th colspan="2" scope="col">服务器信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th >服务器计算机名</th>
+                        <td>{$Request.host}</td>
+                    </tr>
+                    <tr>
+                        <td>服务器IP地址</td>
+                        <td>{$Request.ip}</td>
+                    </tr>
+                    <tr>
+                        <td>服务器域名</td>
+                        <td>{$Request.domain}</td>
+                    </tr>
+                    <tr>
+                        <td>服务器host</td>
+                        <td>{$Request.host}</td>
+                    </tr>
+                    <tr>
+                        <td>当前PHP版本 </td>
+                        <td>{$Think.const.PHP_VERSION}</td>
+                    </tr>
+                    <tr>
+                        <td>服务器版本 </td>
+                        <td>{$Think.const.PHP_OS}</td>
+                    </tr>
+                    <tr>
+                        <td>当前请求URL</td>
+                        <td>{$Request.url.true}</td>
+                    </tr>
+                    <tr>
+                        <td>当前请求控制器</td>
+                        <td>{$Request.action}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-main">
+            <p><a href="/">Copyright ©2017 x-admin v2.3 All Rights Reserved.</a></p>
+            <p><a href="__STATIC__/" target="_blank">本后台系统由X前端框架提供前端技术支持</a></p>
+        </div>
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-admin.js"></script>
+
+    </body>
+</html>

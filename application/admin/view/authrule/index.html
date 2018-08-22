@@ -1,0 +1,88 @@
+{include file="public/header"}
+<link href="__STATIC__/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>管理员用户组</cite></a>
+              <a><cite>用户组管理</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <xblock>
+                <div class="layui-btn"><i class="layui-icon"></i><a href="{:url('authrule/add')}" id="add">添加</a></div>
+                <span class="x-right" style="line-height:40px">共有数据：{$confCount}条</span>
+            </xblock>
+            <table class="layui-table">
+                <thead>
+                    <tr pid="0">
+                        <!-- <th>伸缩</th> -->
+                        <th>ID</th>
+                        <th>规则名称</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    {volist name="ruleTree" id="rule"}
+                        <tr id="{$rule.id}" pid="{$rule.pid}">
+                            <!-- <td><span class="open">+</span></td> -->
+                            <td>{$rule.id}</td>
+                            <td><?php echo str_repeat('--', $rule['level']*4)?>{$rule.title}</td>
+                            <td class="td-manage">
+                                <a href="{:url('authrule/edit',array('id'=>$rule['id']))}" class="btn btn-primary btn-sm shiny">
+                                    <i class="layui-icon"></i>编辑
+                                </a>
+                                <a href="{:url('authrule/delete',array('id'=>$rule['id']))}" class="btn btn-danger btn-sm shiny">
+                                    <i class="layui-icon">&#xe640;</i>删除
+                                </a>
+                            </td>
+                        </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-layui.js" charset="utf-8"></script>
+        <script>
+            layui.use(['element','layer','form'], function(){
+                $ = layui.jquery;//jquery
+                lement = layui.element();//面包导航
+                layer = layui.layer;//弹出层
+                form = layui.form();
+            })
+
+            // //栏目伸缩状态js
+            // $('tr[pid!=0]').hide();
+            // $('.open').click(function(){
+            //     var id=$(this).parents('tr').attr('id');
+            //     if($(this).text()=='+'){
+            //         $(this).text('-');
+            //         $('tr[pid='+id+']').show();
+            //     }else{
+            //         $(this).text('+');
+            //         $.ajax({
+            //             type:"post",
+            //             dataType:"json",
+            //             data:{ruleid:id},
+            //             url:"{:url('AuthRule/ajaxlst')}",
+            //             success:function(data){
+            //                 var sonids=[];
+            //                 var idsobj=$('tr[pid!=0]');
+            //                 idsobj.each(function(k,v){
+            //                     sonids.push($(this).attr('id'));
+            //                 });
+            //                 $.each(data,function(k,v){
+            //                     if($.inArray(v,sonids)){
+            //                         $('tr[id='+v+']').hide();
+            //                         $('tr[id='+v+']').find('span:first').text('+');
+            //                     }
+            //                 });
+            //             }
+            //         });
+            //     }
+            // });
+
+        </script>
+    </body>
+</html>

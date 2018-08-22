@@ -1,0 +1,89 @@
+{include file="public/header"}
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" style="visibility: visible;">
+              <a><cite>首页</cite><span class="layui-box">&gt;</span></a>
+              <a href="{:url('authrule/index')}"><cite>配置管理</cite><span class="layui-box">&gt;</span></a>
+              <a><cite>配置管理列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <form class="layui-form" id="form1" method="post" action="{:url('authrule/update')}">
+                <input type="hidden" name="id" value="{$rules.id}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">上级规则</label>
+                    <div class="layui-input-block" >
+                        <select name="pid">
+                            <option value="0">顶级规则</option>
+                            {volist name="ruleTree" id="rule"}
+                            <option {if condition="$rules['pid'] eq $rule['id']"} selected="selected" {/if} value="{$rule.id}"><?php echo str_repeat('-', $rule['level']*6)?>{$rule.title}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">规则名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" value="{$rules.title}" autocomplete="off" placeholder="请输入您的规则名" class="layui-input">
+                        <div id="errusername" align="center"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">规则</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name"  value="{$rules.name}" autocomplete="off" placeholder="请输入您的规则" class="layui-input">
+                        <div id="errename" align="center"></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开启状态</label>
+                    <div class="col-sm-9">
+                        <div style="float:left; padding-left:10px;">
+                            <label>
+                                <input {if condition="$rules['status'] eq 1"} checked="checked" {/if} name="status" value="1" title="开启" type="radio">
+                            </label>
+                        </div>
+                        <div class="layui-input-block">
+                            <label>
+                                <input {if condition="$rules['status'] eq 0"} checked="checked" {/if} name="status" value="0" title="关闭" type="radio">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否显示</label>
+                    <div class="col-sm-9">
+                        <div style="float:left; padding-left:10px;">
+                            <label>
+                                <input {if condition="$rules['show'] eq 1"} checked="checked" {/if} checked="checked" name="show" value="1" title="显示" type="radio">
+                            </label>
+                        </div>
+                        <div class="layui-input-block">
+                            <label>
+                                <input {if condition="$rules['show'] eq 0"} checked="checked" {/if}  name="show" value="0" title="隐藏" type="radio">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="">
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+        <script src="__STATIC__/js/x-layui.js" charset="utf-8"></script>
+        <script>
+            layui.use(['form','layer'], function(){
+                $ = layui.jquery;var form = layui.form(),layer = layui.layer;
+            });
+        </script>
+
+    </body>
+
+</html>
