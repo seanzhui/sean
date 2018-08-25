@@ -162,6 +162,8 @@
                                 </dd>
                             </dl>
                         </li>
+
+                        <!-- 文章属性的展示 -->
                         {volist name="cateRes" id="vo"}
                         <?php if($vo['cate_attr']==1):?>
                             <li class="layui-nav-item">
@@ -178,6 +180,24 @@
                             </li>
                         <?php endif;?>
                         {/volist}
+
+                        {foreach name="menu" item="vo"}
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">{$vo.icon}</i><cite>{$vo.title}</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                {foreach name="vo['children']" item="vo2"}
+                                    <dd class="">
+                                        <a href="javascript:;" _href="{:url($vo2.name)}">
+                                            <cite>{$vo2.title}</cite>
+                                        </a>
+                                    </dd>
+                                {/foreach}
+                            </dl>
+                        </li>
+                        {/foreach}
+
                     </ul>
                 </div>
 

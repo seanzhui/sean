@@ -15,4 +15,12 @@ class Contact extends Common
     	]);
         return $this-> fetch('contact/contact');
     }
+    public function message(){
+        if(!requst()->isAjax()){
+            $this->error('请求类型错误');
+        }else{
+            $data=input('post.');
+            
+        }
+    }
 }

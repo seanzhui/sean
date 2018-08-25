@@ -17,9 +17,8 @@
                 <li {if condition="$cate['children'] neq 0"} class="dropdown" {/if}>
                     <a href="
                         {if condition="$cate['cate_attr'] eq 1"}{:url('article/index',array('cid'=>$cate['id']))}{/if}
-                        {if condition="$cate['cate_attr'] eq 2"}{$cate.link}{/if}
-                        {if condition="$cate['cate_attr'] eq 3"}{:url('about/index',array('cid'=>$cate['id']))}{/if}
-                        {if condition="$cate['cate_attr'] eq 4"}{:url('gallery/index',array('cid'=>$cate['id']))}{/if}
+                        {if condition="$cate['cate_attr'] eq 2"}{:url('about/index',array('cid'=>$cate['id']))}{/if}
+                        {if condition="$cate['cate_attr'] eq 3"}{$cate.link}{/if}
                         ">
                         <strong>{$cate.cate_name}</strong>
                     </a>
@@ -28,10 +27,9 @@
                             {volist name="$cate['children']" id="sonCate"}
                                 <li>
                                     <a href="
-                                        {if condition="$cate['cate_attr'] eq 1"}{:url('article/index',array('cid'=>$cate['id']))}{/if}
+                                        {if condition="$cate['cate_attr'] eq 1"}{:url('article/index',array('cid'=>$sonCate['id']))}{/if}
                                         {if condition="$cate['cate_attr'] eq 2"}{$cate.link}{/if}
-                                        {if condition="$cate['cate_attr'] eq 3"}{:url('about/index',array('cid'=>$cate['id']))}{/if}
-                                        {if condition="$cate['cate_attr'] eq 4"}{:url('gallery/index',array('cid'=>$cate['id']))}{/if}
+                                        {if condition="$cate['cate_attr'] eq 3"}{:url('about/index',array('cid'=>$sonCate['id']))}{/if}
                                     "><span>{$sonCate.cate_name}</span>
                                     </a>
                                 </li>

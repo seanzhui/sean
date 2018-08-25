@@ -3,7 +3,7 @@
         <div class="x-body">
             <blockquote class="layui-elem-quote">
                 <p>登录次数：{$admindate.login_count} </p>
-                <p>上次登录IP：0.0.0.0 上次登录时间：{$admindate.last_time|date="Y年m月d日 H时i分s秒",###}</p>
+                <p>上次登录时间：{$admindate.last_time|date="Y年m月d日 H时i分s秒",###}</p>
             </blockquote>
 
 
@@ -15,7 +15,6 @@
                     <tr>
                         <th>文章数量</th>
                         <th>留言数量</th>
-                        <th>会员数量</th>
                         <th>登陆数量</th>
                         <th>登陆ip</th>
                     </tr>
@@ -23,8 +22,7 @@
                 <tbody>
                     <td>{$contentCount}</td>
                     <td>{$messageStatus}</td>
-                    <td>124</td>
-                    <td>124</td>
+                    <td>{$admindate.login_count}</td>
                     <td>{$admindate.loat_ip}</td>
                 </tbody>
             </table>

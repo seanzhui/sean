@@ -9,10 +9,17 @@ class Login extends Controller
         }
         if(request()->isPost()){
             $data=input('post.');
+
             if(!captcha_check($data['code'])){
              //验证失败
                 $this->error('验证码错误！');
             };
+
+            $validate=validate('login');
+            if(!$validate->scene('login')->check($data)){
+                $this->error($validate->getError());
+            }
+
             $loginStatus=model('admin')->login($data);
             if($loginStatus==1){
                 $this->success('登录成功！','Index/index');
