@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS `tp_admin` (
 --
 
 INSERT INTO `tp_admin` (`id`, `uname`, `password`, `create_time`, `last_time`, `status`, `groupid`, `img`, `file`, `name`, `create_ip`, `loat_ip`, `login_count`) VALUES
-(1, 'admin', '7917f2596f8bb70c954893f200ba6274', 1500179263, 1533807051, 1, 1, '/adminimg/20180807\\adb8095930fe3dd47531ab6a931d4a8c.jpeg', '', 'admin', '', '', '1'),
-(4, 'sean', '144f67525d025f91ff2f0ab2e656302c', 1533632556, 1535010029, 1, 9, '/adminimg/20180812\\f95b3bc0db1ae48ce101280cce08401f.jpeg', '', 'sean', '', '0.0.0.0', '20');
+(1, 'admin', '7917f2596f8bb70c954893f200ba6274', 1500179263, 1535107883, 1, 1, '/adminimg/20180807\\adb8095930fe3dd47531ab6a931d4a8c.jpeg', '', 'admin', '', '0.0.0.0', '2'),
+(4, 'sean', '144f67525d025f91ff2f0ab2e656302c', 1533632556, 1535183998, 1, 9, '/adminimg/20180812\\f95b3bc0db1ae48ce101280cce08401f.jpeg', '', 'sean', '', '0.0.0.0', '23');
 
 -- --------------------------------------------------------
 
@@ -83,7 +83,15 @@ CREATE TABLE IF NOT EXISTS `tp_archives` (
   `time` int(11) NOT NULL COMMENT '发布时间',
   `file` varchar(60) NOT NULL COMMENT '图片上传的',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- 转存表中的数据 `tp_archives`
+--
+
+INSERT INTO `tp_archives` (`id`, `title`, `keywords`, `description`, `writer`, `source`, `litpic`, `attr`, `click`, `content`, `cate_id`, `model_id`, `time`, `file`) VALUES
+(10, 'mysql导出中文乱码及phpmyadmin导入中文乱码', 'mysql导出中文乱码及phpmyadmin导入中文乱码', 'mysql导出中文乱码及phpmyadmin导入中文乱码', '抄的', '', '', '', 12, '&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;因为要把本机的gbk编码的mysql数据库导入到虚拟主机去，服务商只提供了phpmyadmin供你导入导出。一直不用这个phpmyadmin,在本机也是用navicat,总感觉phpmyadmin速度较慢。这回不行了，没有独立主机，只好用人家给的phpmyadmin了。&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;第一步：本地数据导出sql文件。心想这对于navicat小事一桩。直接在数据库上右键&ldquo;转储sql&rdquo;(如图1),哗哗,十几秒的时间导出成功。&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;img border=&quot;0&quot; alt=&quot;&quot; src=&quot;/ueditor/php/upload/image/20180823/1535015012127593.jpg&quot; width=&quot;257&quot; height=&quot;338&quot; style=&quot;border: 0px; max-width: 900px;&quot;/&gt;&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;（&lt;strong&gt;图1：navicat下对整个数据库转sql&lt;/strong&gt;）&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;用记事本打开一看，傻眼了。中文全是乱码。咋回事呢？搜索了一下，改变什么连接属性啥的。不管用。试着在单张表上，转储sql,嘿,中文正常。但是82个表，我一个个转储我不累死。不行。看来只能弃用我心爱的navicat了。想起有个mysqldump，好试试它。运行-C:\\Documents and Settings\\Administrator&amp;gt;mysqldump -uroot -p123&amp;nbsp; ttg&amp;gt;ttgbk2.sql。打开一看，还是乱码。还不行。唉。。搜索，改成下面的加上指定字符集&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;C:\\Documents and Settings\\Administrator&amp;gt;mysqldump -uroot -p123 --default-character-set=gbk ttg&amp;gt;ttgbk2.sql。打开看看。嘿可以了。&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;第二步：打开虚拟主机提供的phpmyadmin.导入选择文件ttgbk2.sql.点执行。那个速度，唉。。。一会儿报错了。在执行lock tables tablename write 时出现access denied错误，原来我是虚拟主机用户没有 lock tables的权限.打开sql一看还真有lock tables 选项。没权限那就不用这个。到网上一搜说加上--skip-lock-tables，心想不错，应该是这个&ldquo;跳过锁表&rdquo;嘛&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;在mysqldump时加上-skip-lock-tables选项，那么命令行就变成&lt;br/&gt;C:\\Documents and Settings\\Administrator&amp;gt;mysqldump -uroot -p123 --default-character-set=gbk --skip-lock-tables ttg&amp;gt;ttgbk3.sql.&lt;br/&gt;结果令人失望，还是有lock tables.&lt;br/&gt;后来看了一下mysqldump --help&lt;br/&gt;才明白--skip-lock-tables是用在备份时候不让读写。但是如果你不想让导出的带lock-tables（因为你导入的时候没有权限嘛，呵呵）应该是使用add-locks=false，这是2个概念。正确的如下&lt;br/&gt;C:\\Documents and Settings\\Administrator&amp;gt;mysqldump -uroot -p123 --default-character-set=gbk ttg --add-locks=false&amp;gt;ttgttg3.sql.&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;我的版本导出的在记事本中打开是asni格式的。&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;再次到phpmyadmin处导入。结果是导入了3个表后报错。mysql语句报错。一看中文还乱码。。。。。接近崩溃。&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;再找原因。把&ldquo;MySQL 连接校对&rdquo;改成gbk-chinese-ci,把language改成中文-chinese simplified(如图2)。再把导入时&ldquo;文件编码&rdquo;改成&ldquo;gbk&rdquo;(默认的是utf-8，当然对应的sql文件的编码用记事本打开就是ansi.)(如图三).再试。。。。&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;img border=&quot;0&quot; alt=&quot;&quot; src=&quot;/ueditor/php/upload/image/20180823/1535015012664841.jpg&quot; width=&quot;712&quot; height=&quot;274&quot; style=&quot;border: 0px; max-width: 900px;&quot;/&gt;&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;（&lt;strong&gt;图二：修改连接校对及language&lt;/strong&gt;）&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;img border=&quot;0&quot; alt=&quot;&quot; src=&quot;/ueditor/php/upload/image/20180823/1535015012134599.jpg&quot; width=&quot;598&quot; height=&quot;406&quot; style=&quot;border: 0px; max-width: 900px;&quot;/&gt;&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;(&lt;strong&gt;图三：修改文件的字符集为gbk&lt;/strong&gt;)&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;终于所有表导入成功。打开一个含有中文的表，字段显示正常。&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;2点体会：&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;1、数据库编码归数据库编码。保证连接校对与数据库编码一致即可。&lt;/p&gt;&lt;p style=&quot;margin: 10px auto; font-family: Verdana, &amp;quot;Lucida Grande&amp;quot;, Arial, Helvetica, sans-serif; font-size: 12px; white-space: normal; background-color: rgb(255, 255, 255);&quot;&gt;2、sql文件编码归文件编码。保证导入时选择的文件编码与数据库所用编码一致最好。&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;', 16, 35, 1535015015, ''),
+(11, '国维画院', '国维画院', '国维画院网站开发工作', 'sean', 'sean', '20180823\\6cd2d43d78f58c118fa0ec0eefeccbf3.jpg', '', 44, '&lt;p&gt;国维画院&lt;/p&gt;', 17, 35, 1535015145, '');
 
 -- --------------------------------------------------------
 
@@ -95,6 +103,14 @@ CREATE TABLE IF NOT EXISTS `tp_article` (
   `aid` int(10) unsigned NOT NULL,
   `article` varchar(150) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `tp_article`
+--
+
+INSERT INTO `tp_article` (`aid`, `article`) VALUES
+(10, ''),
+(11, '');
 
 -- --------------------------------------------------------
 
@@ -115,8 +131,8 @@ CREATE TABLE IF NOT EXISTS `tp_auth_group` (
 --
 
 INSERT INTO `tp_auth_group` (`id`, `title`, `status`, `rules`) VALUES
-(1, '超级管理员', 1, '1,2,12,13,14,15,6,7,8,10,9,16,22,17,18,19,20,21'),
-(9, '栏目管理员', 1, '10,24,25,26');
+(1, '超级管理员', 1, '1,2,12,13,14,15,27,29,28,30,31,17,18,19,20,21,24,25,26,32,33'),
+(9, '栏目管理员', 1, '24,25,26,32,33');
 
 -- --------------------------------------------------------
 
@@ -125,8 +141,8 @@ INSERT INTO `tp_auth_group` (`id`, `title`, `status`, `rules`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tp_auth_group_access` (
-  `uid` mediumint(8) unsigned NOT NULL,
-  `group_id` mediumint(8) unsigned NOT NULL,
+  `uid` mediumint(8) unsigned NOT NULL COMMENT '管理员id拥有那些权限',
+  `group_id` mediumint(8) unsigned NOT NULL COMMENT '用户组id',
   UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
   KEY `uid` (`uid`),
   KEY `group_id` (`group_id`)
@@ -138,12 +154,7 @@ CREATE TABLE IF NOT EXISTS `tp_auth_group_access` (
 
 INSERT INTO `tp_auth_group_access` (`uid`, `group_id`) VALUES
 (1, 1),
-(2, 1),
-(3, 7),
-(4, 9),
-(5, 8),
-(11, 1),
-(12, 4);
+(4, 9);
 
 -- --------------------------------------------------------
 
@@ -163,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `tp_auth_rule` (
   `show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '菜单是否显示',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
 
 --
 -- 转存表中的数据 `tp_auth_rule`
@@ -172,25 +183,25 @@ CREATE TABLE IF NOT EXISTS `tp_auth_rule` (
 INSERT INTO `tp_auth_rule` (`id`, `name`, `title`, `type`, `status`, `condition`, `pid`, `icon`, `show`) VALUES
 (1, 'admin/Conf', '系统设置', 1, 1, '', 0, 'fa-gear', 1),
 (2, 'admin/Conf/conflst', '配置项列表', 1, 1, '', 1, '', 1),
-(8, 'admin/cate/add/add', '添加栏目-子级', 1, 1, '', 7, '', 1),
-(7, 'admin/Cate/add', '栏目添加', 1, 1, '', 6, '', 1),
-(6, 'admin/Cate', '栏目管理', 1, 1, '', 0, 'fa-folder', 1),
-(9, 'admin/Cate/edit', '栏目修改', 1, 1, '', 6, '', 0),
-(10, 'admin/cate/add/add2', '添加栏目-子集2', 1, 1, '', 7, '', 1),
+(29, 'admin/Authrule/add', '权限添加', 1, 1, '', 27, '', 1),
+(28, 'admin/Authrule/index', '权限显示', 1, 1, '', 27, '', 1),
+(27, 'admin/Authrule', '权限管理', 1, 1, '', 0, '', 1),
 (12, 'admin/Conf/index', '配置列表', 1, 1, '', 1, '', 1),
 (13, 'admin/Conf/add', '配置添加', 1, 1, '', 1, '', 1),
 (14, 'admin/Conf/edit', '配置修改', 1, 1, '', 1, '', 0),
-(15, 'admin/Conf/del', '配置删除', 1, 1, '', 1, '', 0),
-(16, 'admin/Cate/lst', '栏目列表', 1, 1, '', 6, '', 1),
+(15, 'admin/Conf/delete', '配置删除', 1, 1, '', 1, '', 0),
 (17, 'admin/Content', '文档', 1, 1, '', 0, 'fa-file-text', 1),
-(18, 'admin/Content/lst', '文章列表', 1, 1, '', 17, '', 1),
+(18, 'admin/Content/index', '文章列表', 1, 1, '', 17, '', 1),
 (19, 'admin/Content/add', '文章添加', 1, 1, '', 17, '', 0),
 (20, 'admin/Content/edit', '文章编辑', 1, 1, '', 17, '', 0),
-(21, 'admin/Content/del', '文章删除', 1, 1, '', 17, '', 0),
-(22, 'admin/Cate/ajaxlst', '收缩栏目', 1, 1, '', 6, '', 0),
+(21, 'admin/Content/delete', '文章删除', 1, 1, '', 17, '', 1),
 (24, 'admin/message', '评论管理', 1, 1, '', 0, '', 1),
-(25, 'message/index', '评论列表', 1, 1, '', 24, '', 1),
-(26, 'message/delete', '评论删除', 1, 1, '', 24, '', 1);
+(25, 'admin/message/index', '评论列表', 1, 1, '', 24, '', 1),
+(26, 'adminmessage/delete', '评论删除', 1, 1, '', 24, '', 0),
+(30, 'admin/Authrule/edit', '权限修改', 1, 1, '', 27, '', 1),
+(31, 'admin/Authrule/delete', '权限删除', 1, 1, '', 27, '', 1),
+(32, 'admin/index/index', '后台首页', 1, 1, '', 0, '&amp;#xe614;', 0),
+(33, 'admin/index/welcome', '首页信息', 1, 1, '', 0, '&#xe614;', 1);
 
 -- --------------------------------------------------------
 
@@ -215,19 +226,19 @@ CREATE TABLE IF NOT EXISTS `tp_cate` (
   `pid` int(11) NOT NULL DEFAULT '0' COMMENT '上级id',
   `file` varchar(60) NOT NULL COMMENT '不知道哪里冒出来的',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- 转存表中的数据 `tp_cate`
 --
 
 INSERT INTO `tp_cate` (`id`, `cate_name`, `title`, `keywords`, `desc`, `content`, `status`, `img`, `cate_attr`, `link`, `sort`, `model_id`, `bottom_nav`, `pid`, `file`) VALUES
-(12, '关于', '', 'about', '关于', '', 1, '', 3, '', 50, 27, 0, 0, ''),
-(13, '画廊', '', 'gallery', '画廊', '', 1, '', 4, '', 50, 24, 0, 0, ''),
+(12, '关于', '', 'about', '关于', '<p>关于我们关于我们关于我们关于我们关于我们关于我们关于我们1231544645646431313</p>', 1, '/cateimg/20180824\\6ee1b2ed0597d59b6b2c6ae7cf9b7b8f.jpg', 2, '', 50, 27, 0, 0, ''),
+(13, '画廊', '', 'gallery', '画廊', '', 0, '', 1, '', 50, 24, 0, 0, ''),
 (14, '文章', '', 'article', '文章与作品', '', 1, '', 1, '', 50, 35, 0, 0, ''),
 (16, '我的文章', '', 'subarticle', '', '', 1, '', 1, '', 50, 35, 0, 14, ''),
 (17, '我的作品', '', 'producion', '', '', 1, '', 1, '', 50, 35, 0, 14, ''),
-(20, '阿瑟东', '', '搜索', '', '', 1, '', 2, 'www.seanpan.top', 50, 36, 0, 0, '');
+(20, '旧的博客站点', '', '搜索', '', '', 1, '', 3, 'http://www.seanpan.top', 50, 36, 0, 0, '');
 
 -- --------------------------------------------------------
 
