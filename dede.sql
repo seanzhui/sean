@@ -5,21 +5,6 @@
 -- --------------------------------------------------------
 
 --
--- 表的结构 `tp_adflash`
---
-
-CREATE TABLE IF NOT EXISTS `tp_adflash` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `fimg_src` varchar(150) NOT NULL COMMENT '动画广告图片路径',
-  `flink` varchar(100) NOT NULL COMMENT '动画广告链接地址',
-  `ad_id` smallint(6) NOT NULL COMMENT '所属广告id',
-  PRIMARY KEY (`id`),
-  KEY `ad_id` (`ad_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `tp_admin`
 --
 
@@ -37,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `tp_admin` (
   `create_ip` varchar(60) NOT NULL COMMENT '创建ip',
   `loat_ip` varchar(60) NOT NULL COMMENT '登陆ip',
   `login_count` varchar(60) NOT NULL COMMENT '登陆次数',
+  `call` varchar(300) NOT NULL COMMENT '前台访问量',
   PRIMARY KEY (`id`),
   KEY `groupid` (`groupid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
@@ -45,9 +31,9 @@ CREATE TABLE IF NOT EXISTS `tp_admin` (
 -- 转存表中的数据 `tp_admin`
 --
 
-INSERT INTO `tp_admin` (`id`, `uname`, `password`, `create_time`, `last_time`, `status`, `groupid`, `img`, `file`, `name`, `create_ip`, `loat_ip`, `login_count`) VALUES
-(1, 'admin', '7917f2596f8bb70c954893f200ba6274', 1500179263, 1535107883, 1, 1, '/adminimg/20180807\\adb8095930fe3dd47531ab6a931d4a8c.jpeg', '', 'admin', '', '0.0.0.0', '2'),
-(4, 'sean', '144f67525d025f91ff2f0ab2e656302c', 1533632556, 1535613321, 1, 9, '/adminimg/20180812\\f95b3bc0db1ae48ce101280cce08401f.jpeg', '', 'sean', '', '0.0.0.0', '25');
+INSERT INTO `tp_admin` (`id`, `uname`, `password`, `create_time`, `last_time`, `status`, `groupid`, `img`, `file`, `name`, `create_ip`, `loat_ip`, `login_count`, `call`) VALUES
+(1, 'admin', '7917f2596f8bb70c954893f200ba6274', 1500179263, 1535107883, 1, 1, '/adminimg/20180807\\adb8095930fe3dd47531ab6a931d4a8c.jpeg', '', 'admin', '', '0.0.0.0', '2', '31'),
+(4, 'sean', '144f67525d025f91ff2f0ab2e656302c', 1533632556, 1535613321, 1, 9, '/adminimg/20180812\\f95b3bc0db1ae48ce101280cce08401f.jpeg', '', 'sean', '', '0.0.0.0', '25', '');
 
 -- --------------------------------------------------------
 
@@ -290,6 +276,18 @@ INSERT INTO `tp_conf` (`id`, `cname`, `ename`, `value`, `values`, `dt_type`, `cf
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `tp_count`
+--
+
+CREATE TABLE IF NOT EXISTS `tp_count` (
+  `id` int(12) NOT NULL AUTO_INCREMENT COMMENT '统计id',
+  `call` varchar(255) NOT NULL COMMENT '访问量',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `tp_emailconfig`
 --
 
@@ -406,6 +404,18 @@ INSERT INTO `tp_model_fields` (`id`, `field_cname`, `field_ename`, `field_type`,
 CREATE TABLE IF NOT EXISTS `tp_page` (
   `aid` int(10) unsigned NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `tp_stat`
+--
+
+CREATE TABLE IF NOT EXISTS `tp_stat` (
+  `id` int(12) NOT NULL AUTO_INCREMENT COMMENT '统计id',
+  `call` varchar(255) NOT NULL COMMENT '访问量',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

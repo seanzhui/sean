@@ -12,8 +12,9 @@ class Common extends Controller
         $cateRes=$this->getCate();//顶部导航
         // dump($cateRes);die;
         $this->confs=$this->getConf();//配置项
-
+        $call=db('admin')->field('call')->where('id',1)->find();
         $this->assign([
+            'call'=>$call,
             'cateRes'=>$cateRes,
             'confs'=>$this->confs,
     	]);

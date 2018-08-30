@@ -4,9 +4,9 @@
         <header id="header" class="inner">
             <a href="{url:('index/index')}" class="profilepic"><img src="public/static/admin/images/uploads/{$confs.logo}" class="animated zoomIn"></a>
             <hgroup><h1 class="header-author"><a href="/">{$confs.contact}</a></h1></hgroup>
-            <form id="search-form">
-                <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
-                <i class="fa fa-times" onclick="resetSearch()"></i>
+            <form id="search-form" action="{:url('search/index')}" name="formsearch" method="post">
+                <input type="text" id="local-search-input" name="keywords" placeholder="search..." class="search form-control"/>
+                <i class="fa fa-QQ"></i>
             </form>
             <div id="switch-btn" class="switch-btn">
                     <div class="icon">

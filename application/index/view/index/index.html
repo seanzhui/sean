@@ -47,7 +47,7 @@
                           <input type="hidden" class="isFancy">
                             <header class="article-header">
                                 <h1 itemprop="name">
-                                    <a class="article-title" href="{url:('article/article'),array('aid'=>$vo['id'])}">{$vo.title}</a>
+                                    <a class="article-title" href="{:url('Article/article',array('aid'=>$vo['id']))}">{$vo.title}</a>
                                 </h1>
                             </header>
                         <div class="article-entry" itemprop="articleBody">{$vo.description}</div>
@@ -55,7 +55,7 @@
                             <div class="article-tag tagcloud">
                                 <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link color2" href="/tags/css/">css</a></li></ul>
                             </div>
-                            <p class="article-more-link"><a href="{url:('article/article'),array('aid'=>$vo['id'])}">阅读全文 &gt;&gt;</a></p>
+                            <p class="article-more-link"><a href="{:url('Article/article',array('aid'=>$vo['id']))}">阅读全文 &gt;&gt;</a></p>
                             <div class="clearfix"></div>
                         </div>
                     </div>

@@ -2,8 +2,8 @@
 <html lang="zh-Hans">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="{$confs.desc}-{$cates.cate_name}">
-<meta name="keywords" content="{$confs.keywords}-{$cates.keywords}">
+<meta name="description" content="{$confs.desc}">
+<meta name="keywords" content="{$confs.keywords}">
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <link href="__index__/css/animate.min.css" rel="stylesheet">
     <link href="__index__/css/jquery.fancybox.min.css" rel="stylesheet">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="__index__/css/style.css">
     <style> .article { opacity: 0;} </style>
     <link href="__index__/css/font-awesome.min.css" rel="stylesheet">
-    <title>{$topCates.cate_name}</title>
+    <title>搜索</title>
     <script src="__index__/js/jquery.min.js"></script>
     <script src="__index__/js/clipboard.min.js"></script>
     <script>
@@ -40,8 +40,8 @@
     <div class="mid-col">
             <div class="body-wrap">
                 <section class="archives-wrap">
-                    <div class="archive-year-wrap"><a href="#" class="archive-year">2018</a></div>
-                    {volist name="artRes" id="art"}
+                    <div class="archive-year-wrap"><p style="font-size: 17px;width: 70%;margin:auto;">{$keywords}</p></div>
+                    {volist name="serRes" id="art"}
                         <div class="archives">
                             <article class="archive-article archive-type-post">
                               <div class="archive-article-inner">
@@ -54,7 +54,7 @@
                                         <div class="article-tag tagcloud">
                                             <ul class="article-tag-list">
                                                 <li class="article-tag-list-item">
-                                                    <a class="article-tag-list-link color2" href="#">{$topCates.cate_name}</a>
+                                                    <a class="article-tag-list-link color2" href="#">0.0</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -70,6 +70,6 @@
 
             {include file="common/footer"}
 
-            <button class="hide-labels">TAGS</button>
+            <button class="hide-labels">搜索:</button>
         </div>
 {include file="common/script"}
