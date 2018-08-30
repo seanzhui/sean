@@ -19,6 +19,6 @@ class About extends Common
             'sonCateRes'=>$sonCateRes,//二级栏目
             'pos'=>$pos,//面包屑
         ]);
-        return $this-> fetch('about/about');
+        return $this-> fetch('about/index');
     }
 }

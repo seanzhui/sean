@@ -1,0 +1,51 @@
+<div class="left-col">
+    <div class="overlay"></div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="{url:('index/index')}" class="profilepic"><img src="public/static/admin/images/uploads/{$confs.logo}" class="animated zoomIn"></a>
+            <hgroup><h1 class="header-author"><a href="/">{$confs.contact}</a></h1></hgroup>
+            <form id="search-form">
+                <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+                <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="switch-btn" class="switch-btn">
+                    <div class="icon">
+                        <div class="icon-ctn">
+                            <div class="icon-wrap icon-house" data-idx="0">
+                                <div class="birdhouse"></div>
+                                <div class="birdhouse_holes"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div id="switch-area" class="switch-area">
+                <div class="switch-wrap">
+                    <section class="switch-part switch-part1">
+                        <nav class="header-menu">
+                            <ul>
+                                <li><a href="/">主页</a></li>
+                                {volist name="cateRes" id="cate"}
+                                    <li>
+                                        <a class="first-level" href="
+                                            {if condition="$cate['cate_attr'] eq 1"}{:url('article/index',array('cid'=>$cate['id']))}{/if}
+                                            {if condition="$cate['cate_attr'] eq 2"}{:url('about/index',array('cid'=>$cate['id']))}{/if}
+                                            {if condition="$cate['cate_attr'] eq 3"}{$cate.link}{/if}
+                                        "><strong>{$cate.cate_name}</strong></a><i></i>
+                                    </li>
+                                {/volist}
+                            </ul>
+                        </nav>
+                        <nav class="header-nav">
+                            <ul class="social">
+                                <a class="fa Email" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=seanzhui@qq.com" title="Email" target="_blank"></a>
+                                <a class="fa fa-github" href="https://github.com/" title="github" target="_blank"></a>
+                                <a class="fa QQ" href="http://wpa.qq.com/msgrd?v=3&amp;uin=906437098&amp;site=qq&amp;menu=yes" title="QQ" target="_blank"></a>
+                            </ul>
+                        </nav>
+                    </section>
+                </div>
+            </div>
+            <div id="js-aboutme" style="line-height:30px;">人的一切痛苦，本质上都是对自己的无能的愤怒</div>
+        </header>
+    </div>
+</div>

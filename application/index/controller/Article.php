@@ -6,6 +6,7 @@ class Article extends Common
     public function index($cid)
     {
         $cates=db('cate')->find($cid);//查询当前栏目信息
+        
         //获取对应的附加表的名称
         $models=db('model')->field('table_name')->find($cates['model_id']);
         $addTableName=$models['table_name'];
@@ -32,11 +33,11 @@ class Article extends Common
             'sonCateRes'=>$sonCateRes,
             'pos'=>$pos,
     	]);
-        return $this-> fetch('article/index');
+        return $this-> fetch('article/artlist');
     }
 
-    public function article($aid)
-    {
+    public function article($aid){
+
         $arts=db('archives')->find($aid);
     	$cid=$arts['cate_id'];
     	$cates=db('cate')->find($cid);
@@ -44,7 +45,10 @@ class Article extends Common
         $models=db('model')->field('table_name')->find($cates['model_id']);
         $addTableName=$models['table_name'];
         $arts=db('archives')->alias('a')->join("$addTableName b",'a.id=b.aid')->find($aid);
-    	// echo $tempSrc; die;
+        //上下文章
+        $front=db('archives')->field('id,title')->where("id<".$aid)->where('cate_id','=',$cid)->order('id')->limit('1')->find();
+        $after=db('archives')->field('id,title')->where("id>".$aid)->where('cate_id','=',$cid)->order('id')->limit('1')->find();
+    	// dump($front); die;
     	//顶级栏目id获取
         $topcid=model('cate')->getTopId($cid);
         $topCates=db('cate')->find($topcid);//顶级栏目信息
@@ -53,6 +57,8 @@ class Article extends Common
         //面包屑
         $pos=model('cate')->position($cid);
         $this->assign([
+            'front'=>$front,
+            'after'=>$after,
     		'arts'=>$arts,
             'topcid'=>$topcid,
             'cid'=>$cid,
@@ -63,6 +69,7 @@ class Article extends Common
     		]);
     	return $this->fetch('article/article');
     }
+
 
 
 }

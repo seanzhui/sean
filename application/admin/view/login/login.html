@@ -14,15 +14,13 @@
                             <div class="layui-input-inline">
                                 <input type="text" name="uname" onblur="checkuname" required="required" lay-verify="用户名" autocomplete="off" placeholder="username" class="layui-input">
                             </div>
-                            <div id="username" align="center"></div>
                         </div>
                         <div class="layui-form-item x-login-box">
                             <label for="pass" class="layui-form-label">
                                 <i class="layui-icon">&#xe628;</i>
                             </label>
                             <div class="layui-input-inline">
-                                <input type="password" name="password" onblur="checkfield_ename()" required="required" lay-verify="密码" autocomplete="off" placeholder="" class="layui-input">
-                                <div id="htmlpassword" align="center"></div>
+                                <input type="password" name="password" required="required" lay-verify="密码" autocomplete="off" placeholder="" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item x-login-box">
@@ -46,32 +44,7 @@
         </div>
         <p style="color:#fff;text-align: center;">Copyright © 2018.Company name All rights sean </p>
         <script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
-        <script>
-        function checkname(){
-            var myform = document.getElementById("login");
-            var uname=/^[A-Za-z]+$/;
-            if(!uname.test(myform.uname.value))
-            {
-                username.innerHTML = "<font color='red'>用户名不符合要求</font>";
-                return false;
-            }else{
-                username.innerHTML = "<font color='green'>用户名符合要求</font>";
-                return true;
-            }
-        }
 
-            function checkfield_ename(){
-                var myform = document.getElementById("login");
-                var password=/^[A-Za-z]+$/;
-                if(!password.test(myform.password.value)){
-                    htmlpassword.innerHTML = "<font color='red'>密码不符合要求</font>";
-                    return false;
-                }else{
-                    htmlpassword.innerHTML = "<font color='green'>密码符合要求</font>";
-                    return true;
-                }
-            }
-        </script>
     </body>
 
 </html>
